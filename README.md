@@ -31,7 +31,6 @@ Le projet sera un plugin Unity, disponible sur l'AssetStore de Unity.
 ## Explication du jeu
  Le projet de jeu RTS (jeu de stratégie en temps réel) nous permettrait d'en apprendre le plus possible sur la technologie DOTS, car ce genre de jeu est très gourmand en ressources, et ainsi pouvoir proposer une solution le mieux adapté à ce genre de projets. 
 # 7. Conclusion
-## Résumé des Bénéfices Attendus
 L'objectif de ce projet est de pouvoir créer et mettre à disposition des jeux avec des performances améliorées sans avoir besoin d'investir dans du matériel de très haute qualité, ainsi que réduire les coûts énergétiques nécessaires pour jouer, et parallèlement allonger la durée de vie des composants utilisés, car ils seront mieux exploités.
 
 Une évolution possible de ce projet pourrait être un convertisseur, permettant de convertir un jeu déja créé qui n'utilise actuellement pas la technologie DOTS, en un jeu jouable immédiatement, et qui verrait ses performances grandement améliorées via DOTS. 
