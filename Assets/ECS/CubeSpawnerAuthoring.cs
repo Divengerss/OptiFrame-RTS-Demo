@@ -22,6 +22,11 @@ namespace ECS
                 nextSpawnTime = 0.0f,
                 spawnRate = authoring.spawnRate
             });
+
+            AddComponent(entity, new SpawnCounterComponent
+            {
+                count = 0
+            });
         }
     }
 }

@@ -17,6 +17,7 @@ namespace ECS
             }
 
             RefRW<CubeSpawnerComponent> spawner = SystemAPI.GetComponentRW<CubeSpawnerComponent>(spawnEntity);
+            RefRW<SpawnCounterComponent> counter = SystemAPI.GetComponentRW<SpawnCounterComponent>(spawnEntity);
 
             EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
 
@@ -24,10 +25,15 @@ namespace ECS
             {
                 Entity newEntity = ecb.Instantiate(spawner.ValueRO.prefab);
 
-                ecb.AddComponent(newEntity, new SphereComponent { moveDirection = 
-                Random.CreateFromIndex((uint)(SystemAPI.Time.ElapsedTime / SystemAPI.Time.DeltaTime)).NextFloat3(), moveSpeed = 30 });
+                ecb.AddComponent(newEntity, new SphereComponent
+                {
+                    moveDirection = Random.CreateFromIndex((uint)(SystemAPI.Time.ElapsedTime / SystemAPI.Time.DeltaTime)).NextFloat3(),
+                    moveSpeed = 30
+                });
 
                 spawner.ValueRW.nextSpawnTime = (float)SystemAPI.Time.ElapsedTime + spawner.ValueRO.spawnRate;
+
+                counter.ValueRW.count += 1;
 
                 ecb.Playback(state.EntityManager);
             }

@@ -3,6 +3,7 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Mathematics;
 using Unity.Transforms;
+using System.Diagnostics;
 
 
 [BurstCompile]
@@ -27,16 +28,19 @@ public partial struct SphereSystem : ISystem
                 localTransform.Position = localTransform.Position + moveDirection;
                 entityManager.SetComponentData<LocalTransform>(entity, localTransform);
 
-                // if (sphere.moveSpeed > 0)
-                // {
-                // }
-                sphere.moveSpeed -= 1 * SystemAPI.Time.DeltaTime;
-                sphere.moveDirection.y -= 1 * SystemAPI.Time.DeltaTime;
-                // if (sphere.moveDirection.y > 0)
-                // {
-                // } else {
-                //     // sphere.moveSpeed = 0
-                // }
+                if (localTransform.Position.y >= 0) {
+                    if (sphere.moveSpeed > 0) {
+                        sphere.moveSpeed -= 1 * SystemAPI.Time.DeltaTime;
+                        sphere.moveDirection.y -= 1 * SystemAPI.Time.DeltaTime;
+                    } else {
+                        sphere.moveSpeed = 0;
+                        sphere.moveDirection.y = 0;
+                    }
+                } else {
+                    if (sphere.moveSpeed > 0)
+                        localTransform.Position.y = 0;
+                    sphere.moveDirection.y = -sphere.moveDirection.y;
+                }
                 entityManager.SetComponentData<SphereComponent>(entity, sphere);
             }
         }
