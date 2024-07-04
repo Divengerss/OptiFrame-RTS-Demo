@@ -9,7 +9,7 @@ public class CreateNewComponentWindow : EditorWindow
     private string componentName = "NewComponent";
     private List<FieldData> fields = new List<FieldData>();
     private string[] fieldTypes = {
-        "Boolean", "String", "Integer", "Float", "Float3"
+        "Boolean", "String", "Integer", "Float", "Float3", "Entity"
     };
     private int selectedTypeIndex = 0;
     private bool hasInvalidFieldNames = false;
@@ -96,6 +96,7 @@ public class CreateNewComponentWindow : EditorWindow
             case 2: return "int";
             case 3: return "float";
             case 4: return "float3";
+            case 5: return "Entity";
             default: return "int";
         }
     }

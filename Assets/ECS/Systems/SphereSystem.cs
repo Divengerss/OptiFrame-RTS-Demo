@@ -3,8 +3,6 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Mathematics;
 using Unity.Transforms;
-using System.Diagnostics;
-
 
 [BurstCompile]
 public partial struct SphereSystem : ISystem
