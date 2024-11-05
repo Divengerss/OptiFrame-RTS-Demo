@@ -1,9 +1,13 @@
 using Unity.Entities;
 using Unity.Mathematics;
 
-public struct PlayerComponent : IComponentData
+namespace ECS
 {
-    public float3 spawnPosition;
-    public float3 moveDirection;
-    public float moveSpeed;
+    public struct PlayerComponent : IComponentData
+    {
+        public float3 spawnPosition; // Position to spawn
+        public float3 moveDirection; // Direction for movement
+        public float moveSpeed; // Speed of movement
+        public Entity currentLOD; // Current LOD prefab
+    }
 }

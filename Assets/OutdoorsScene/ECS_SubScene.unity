@@ -385,8 +385,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 760be7eb7a0e3904fbc9a594ce0fd0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3057241064228489488, guid: fb9a06426d44b624f8b050ad45ea73a3, type: 3}
-  spawnRate: 0
+  LOD0Prefab: {fileID: 3057241064228489488, guid: fb9a06426d44b624f8b050ad45ea73a3, type: 3}
+  LOD1Prefab: {fileID: 100000, guid: 00dc5cc1180499142a9093a0b9eaf042, type: 3}
+  LOD2Prefab: {fileID: 3131779736206849831, guid: 6e8679e4f467e4942a99b9cb310c2a9c, type: 3}
+  LOD3Prefab: {fileID: 4677967304646555155, guid: 67f12bd7662f3db45a5f2ef7b8fdc2ca, type: 3}
+  spawnRate: 100
 --- !u!4 &994385121
 Transform:
   m_ObjectHideFlags: 0

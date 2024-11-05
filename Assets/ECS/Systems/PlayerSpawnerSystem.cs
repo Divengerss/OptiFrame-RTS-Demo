@@ -2,7 +2,7 @@ using Unity.Entities;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Mathematics;
-using Unity.Transforms; // Required for LocalTransform or Translation
+using Unity.Transforms;
 
 namespace ECS
 {
@@ -11,14 +11,10 @@ namespace ECS
     {
         private static float3 CalculateGridPosition(int index, float3 startPos, int rows, int cols, float cellSize)
         {
-            // Calculate row and column based on index
             int row = index / cols;
             int col = index % cols;
-
-            // Calculate x and z based on row and column
             float x = startPos.x + col * cellSize;
             float z = startPos.z - row * cellSize;
-
             return new float3(x, startPos.y, z);
         }
 
@@ -37,18 +33,14 @@ namespace ECS
 
             if (spawner.ValueRO.nextSpawnTime < SystemAPI.Time.ElapsedTime)
             {
-                // Calculate grid position for the new entity
                 float3 startPos = new float3(-190, 0, 180);
-                int gridRows = 190;
-                int gridCols = 190;
+                int gridRows = 10;
+                int gridCols = 10;
                 float cellSize = 2f;
-
-                // Use the counter to determine the position in the grid
                 float3 spawnPosition = CalculateGridPosition(counter.ValueRO.count, startPos, gridRows, gridCols, cellSize);
 
-                Entity newEntity = entityCmdBuffer.Instantiate(spawner.ValueRO.prefab);
+                Entity newEntity = entityCmdBuffer.Instantiate(spawner.ValueRO.LOD0Prefab);
 
-                // Set the spawn position as the entity's LocalTransform
                 entityCmdBuffer.AddComponent(newEntity, new LocalTransform
                 {
                     Position = spawnPosition,
@@ -59,12 +51,23 @@ namespace ECS
                 entityCmdBuffer.AddComponent(newEntity, new PlayerComponent
                 {
                     spawnPosition = spawnPosition,
-                    moveDirection = Unity.Mathematics.Random.CreateFromIndex((uint)(SystemAPI.Time.ElapsedTime / SystemAPI.Time.DeltaTime)).NextFloat3(),
-                    moveSpeed = 30
+                    moveDirection = Random.CreateFromIndex((uint)(SystemAPI.Time.ElapsedTime / SystemAPI.Time.DeltaTime)).NextFloat3(),
+                    moveSpeed = 30,
+                    currentLOD = spawner.ValueRO.LOD0Prefab
+                });
+
+                entityCmdBuffer.AddComponent(newEntity, new LODComponent
+                {
+                    LOD0Prefab = spawner.ValueRO.LOD0Prefab,
+                    LOD1Prefab = spawner.ValueRO.LOD1Prefab,
+                    LOD2Prefab = spawner.ValueRO.LOD2Prefab,
+                    LOD3Prefab = spawner.ValueRO.LOD3Prefab,
+                    LOD1Distance = 50f,
+                    LOD2Distance = 100f,
+                    LOD3Distance = 200f
                 });
 
                 spawner.ValueRW.nextSpawnTime = (float)SystemAPI.Time.ElapsedTime + spawner.ValueRO.spawnRate;
-
                 counter.ValueRW.count += 1;
 
                 entityCmdBuffer.Playback(state.EntityManager);
