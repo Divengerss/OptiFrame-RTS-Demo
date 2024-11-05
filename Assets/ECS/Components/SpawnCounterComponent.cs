@@ -1,6 +1,9 @@
 using Unity.Entities;
 
-public struct SpawnCounterComponent : IComponentData
+namespace ECS
 {
-    public int count;
+    public struct SpawnCounterComponent : IComponentData
+    {
+        public int count;
+    }
 }
