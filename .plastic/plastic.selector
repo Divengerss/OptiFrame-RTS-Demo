@@ -1,4 +1,0 @@
-repository "OptiFrame-Prototype@Dorvann@cloud"
-  path "/"
-    br "/main"
-    co "/main"
