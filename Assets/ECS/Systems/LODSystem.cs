@@ -2,6 +2,7 @@ using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
 using Unity.Collections;
+using Unity.Rendering;
 using UnityEngine;
 using Unity.Jobs;
 
@@ -55,6 +56,19 @@ namespace ECS
                             moveSpeed = player.moveSpeed,
                             currentLOD = desiredLOD
                         });
+
+                        // Retrieve MaterialMeshInfo and RenderBounds from the desired LOD prefab
+                        if (SystemAPI.HasComponent<MaterialMeshInfo>(desiredLOD) &&
+                            SystemAPI.HasComponent<RenderBounds>(desiredLOD))
+                        {
+                            Debug.Log("Test");
+                            var newMaterialMeshInfo = SystemAPI.GetComponent<MaterialMeshInfo>(desiredLOD);
+                            // var newRenderBounds = SystemAPI.GetComponent<RenderBounds>(desiredLOD);
+
+                            // Apply MaterialMeshInfo and RenderBounds to the entity
+                            ecb.SetComponent(entity, newMaterialMeshInfo);
+                            // ecb.SetComponent(entity, newRenderBounds);
+                        }
                     }
 
                 }).Schedule(Dependency);
